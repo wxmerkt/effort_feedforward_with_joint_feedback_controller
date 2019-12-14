@@ -6,6 +6,7 @@ set(CATKIN_DEPENDENCIES
   hardware_interface
   message_generation
   pluginlib
+  realtime_tools
   roscpp
   std_msgs
 )
