@@ -1,0 +1,7 @@
+<launch>
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find effort_feedforward_with_joint_feedback_controller)/config/j2s6s200_control.yaml" command="load"/>
+
+  <!-- load the controllers -->
+  <node name="j2s6s200_control_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="j2s6s200_control"/>
+</launch>

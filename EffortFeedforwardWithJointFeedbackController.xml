@@ -1,0 +1,7 @@
+<library path="lib/libeffort_feedforward_with_joint_feedback_controller">
+  <class name="effort_feedforward_with_joint_feedback_controller/EffortFeedforwardWithJointFeedbackController" type="effort_feedforward_with_joint_feedback_controller::EffortFeedforwardWithJointFeedbackController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      ROS-Control controller for feed-forward effort control with joint PD feedback
+    </description>
+  </class>
+</library>

@@ -1,0 +1,41 @@
+j2s6s200_control:
+  type: effort_feedforward_with_joint_feedback_controller/EffortFeedforwardWithJointFeedbackController
+  command_offset: 12
+  joints:
+    - j2s6s200_joint_1
+    - j2s6s200_joint_2
+    - j2s6s200_joint_3
+    - j2s6s200_joint_4
+    - j2s6s200_joint_5
+    - j2s6s200_joint_6
+  default_positions: [4.71239, 3.66519, 1.0472, 0.0, 2.0944, 0.0]
+  default_position_gains: [5000., 5000., 5000., 500., 200., 500.] #[150, 150, 150, 80.0, 80.0, 20.0]
+  default_velocity_gains: [0, 0, 0, 0, 0, 0] #[  2,   2,   2,  0.1,  0.1, 0.04]
+  max_efforts: [40., 80., 40., 20., 20., 20.]
+j2s6s200_finger_control:
+  type: effort_feedforward_with_joint_feedback_controller/EffortFeedforwardWithJointFeedbackController
+  command_offset: 0
+  joints:
+    - j2s6s200_joint_finger_1
+    - j2s6s200_joint_finger_2
+  default_positions: [0.0, 0.0]
+  default_position_gains: [10, 10]
+  default_velocity_gains: [0., 0.]
+  max_efforts: [2., 2.]
+finger_tip_1_position_controller:
+  joint: j2s6s200_joint_finger_tip_1
+  pid:
+    d: 0
+    i: 0
+    p: 0.5
+  type: effort_controllers/JointPositionController
+finger_tip_2_position_controller:
+  joint: j2s6s200_joint_finger_tip_2
+  pid:
+    d: 0
+    i: 0
+    p: 0.5
+  type: effort_controllers/JointPositionController
+joint_state_controller:
+    publish_rate: 50
+    type: joint_state_controller/JointStateController

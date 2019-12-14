@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>effort_feedforward_with_joint_feedback_controller</name>
+  <version>0.0.1</version>
+  <description>ROS-Control controller for feed-forward effort control with joint PD feedback.</description>
+
+  <maintainer email="wolfgang.merkt@ed.ac.uk">Wolfgang Merkt</maintainer>
+  <author email="wolfgang.merkt@ed.ac.uk">Wolfgang Merkt</author>
+  <license>BSD</license>
+
+  <url type="repository">https://github.com/wxmerkt/effort_feedforward_with_joint_feedback_controller</url>
+  <url type="bugtracker">https://github.com/wxmerkt/effort_feedforward_with_joint_feedback_controller/issues</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>controller_interface</depend>
+  <depend>hardware_interface</depend>
+  <depend>joint_limits_interface</depend>
+  <depend>message_generation</depend>
+  <depend>message_runtime</depend>
+  <depend>pluginlib</depend>
+  <depend>roscpp</depend>
+  <depend>std_msgs</depend>
+
+  <export>
+    <controller_interface plugin="${prefix}/EffortFeedforwardWithJointFeedbackController.xml"/>
+  </export>
+</package>
