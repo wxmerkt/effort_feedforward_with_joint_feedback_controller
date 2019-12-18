@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.12)
 project(effort_feedforward_with_joint_feedback_controller)
 
 set(CATKIN_DEPENDENCIES
+  angles  
   controller_interface
   hardware_interface
   message_generation
@@ -9,6 +10,7 @@ set(CATKIN_DEPENDENCIES
   realtime_tools
   roscpp
   std_msgs
+  urdf
 )
 
 find_package(catkin REQUIRED COMPONENTS ${CATKIN_DEPENDENCIES})

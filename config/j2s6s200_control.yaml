@@ -19,9 +19,23 @@ j2s6s200_finger_control:
     - j2s6s200_joint_finger_1
     - j2s6s200_joint_finger_2
   default_positions: [0.0, 0.0]
-  default_position_gains: [10, 10]
-  default_velocity_gains: [0., 0.]
+  default_position_gains: [10., 10.]
+  default_velocity_gains: [0.01, 0.01]
   max_efforts: [2., 2.]
+finger_1_position_controller:
+  joint: j2s6s200_joint_finger_1
+  pid:
+    d: 0
+    i: 0
+    p: 10
+  type: effort_controllers/JointPositionController
+finger_2_position_controller:
+  joint: j2s6s200_joint_finger_2
+  pid:
+    d: 0
+    i: 0
+    p: 10
+  type: effort_controllers/JointPositionController
 finger_tip_1_position_controller:
   joint: j2s6s200_joint_finger_tip_1
   pid:
@@ -39,3 +53,48 @@ finger_tip_2_position_controller:
 joint_state_controller:
     publish_rate: 50
     type: joint_state_controller/JointStateController
+effort_joint_group_position_controller:
+  j2s6s200_joint_1:
+    pid:
+      d: 0
+      i: 0
+      i_clamp: 10
+      p: 5000
+  j2s6s200_joint_2:
+    pid:
+      d: 0
+      i: 0
+      i_clamp: 10
+      p: 5000
+  j2s6s200_joint_3:
+    pid:
+      d: 0
+      i: 0
+      i_clamp: 10
+      p: 5000
+  j2s6s200_joint_4:
+    pid:
+      d: 0
+      i: 0
+      i_clamp: 10
+      p: 500
+  j2s6s200_joint_5:
+    pid:
+      d: 0
+      i: 0
+      i_clamp: 10
+      p: 200
+  j2s6s200_joint_6:
+    pid:
+      d: 0
+      i: 0
+      i_clamp: 10
+      p: 500
+  joints:
+  - j2s6s200_joint_1
+  - j2s6s200_joint_2
+  - j2s6s200_joint_3
+  - j2s6s200_joint_4
+  - j2s6s200_joint_5
+  - j2s6s200_joint_6
+  type: effort_controllers/JointGroupPositionController

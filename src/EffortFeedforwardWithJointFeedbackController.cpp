@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+#include <angles/angles.h>
 #include <controller_interface/controller.h>
 #include <effort_feedforward_with_joint_feedback_controller/EffortFeedforwardWithJointFeedback.h>
 #include <hardware_interface/joint_command_interface.h>
@@ -11,6 +12,7 @@
 #include <realtime_tools/realtime_publisher.h>
 #include <ros/node_handle.h>
 #include <std_msgs/Float64MultiArray.h>
+#include <urdf/model.h>
 
 // #include <joint_limits_interface/joint_limits.h>
 // #include <joint_limits_interface/joint_limits_urdf.h>
@@ -39,6 +41,15 @@ public:
         }
         n_joints_ = joint_names_.size();
 
+        // Get URDF
+        urdf::Model urdf;
+        if (!urdf.initParam("anymal_description"))
+        //if (!urdf.initParam("robot_description"))
+        {
+            ROS_ERROR("Failed to parse URDF file");
+            return false;
+        }
+
         if (n_joints_ == 0)
         {
             ROS_ERROR_STREAM("List of joint names is empty.");
@@ -46,15 +57,25 @@ public:
         }
         for (std::size_t i = 0; i < n_joints_; i++)
         {
+            const auto& joint_name = joint_names_[i];
+
             try
             {
-                joints_.push_back(hw->getHandle(joint_names_[i]));
+                joints_.push_back(hw->getHandle(joint_name));
             }
             catch (const hardware_interface::HardwareInterfaceException& e)
             {
                 ROS_ERROR_STREAM("Exception thrown: " << e.what());
                 return false;
             }
+
+            urdf::JointConstSharedPtr joint_urdf = urdf.getJoint(joint_name);
+            if (!joint_urdf)
+            {
+                ROS_ERROR("Could not find joint '%s' in urdf", joint_name.c_str());
+                return false;
+            }
+            joint_urdfs_.push_back(joint_urdf);
         }
 
         // Offset in command buffer
@@ -149,11 +170,34 @@ public:
             // Compute control
             double q_measured = joints_[i].getPosition();
             double qdot_measured = joints_[i].getVelocity();
-            double feedback_term = position_gains[i] * (desired_positions[i] - q_measured) + velocity_gains[i] * (desired_velocities[i] - qdot_measured);
-            double effort = desired_efforts[i] + feedback_term;
-            double clamped_effort = clamp(effort, -max_efforts_[i], max_efforts_[i]);
 
-            // TODO: MAX EFFORT!
+            double position_error, velocity_error;
+
+            // Compute position error
+            if (joint_urdfs_[i]->type == urdf::Joint::REVOLUTE)
+            {
+                angles::shortest_angular_distance_with_large_limits(
+                    q_measured,
+                    desired_positions[i],
+                    joint_urdfs_[i]->limits->lower,
+                    joint_urdfs_[i]->limits->upper,
+                    position_error);
+            }
+            else if (joint_urdfs_[i]->type == urdf::Joint::CONTINUOUS)
+            {
+                position_error = angles::shortest_angular_distance(q_measured, desired_positions[i]);
+            }
+            else  //prismatic
+            {
+                position_error = desired_positions[i] - q_measured;
+            }
+
+            velocity_error = (desired_velocities[i] - qdot_measured);
+
+            double feedback_term = position_gains[i] * position_error + velocity_gains[i] * velocity_error;
+            double effort = desired_efforts[i] + feedback_term;
+            double clamped_effort = clamp(effort, -joint_urdfs_[i]->limits->effort, joint_urdfs_[i]->limits->effort);
+
             joints_[i].setCommand(clamped_effort);
 
             // compute ratio and send
@@ -173,6 +217,8 @@ protected:
     std::vector<hardware_interface::JointHandle> joints_;
     std::size_t n_joints_;
     int command_offset_ = 0;
+
+    std::vector<urdf::JointConstSharedPtr> joint_urdfs_;
 
     // Default values
     std::vector<double> default_positions_;
