@@ -19,6 +19,7 @@ find_package(catkin REQUIRED COMPONENTS ${CATKIN_DEPENDENCIES})
 add_message_files(
   FILES
   EffortFeedforwardWithJointFeedback.msg
+  EffortFeedforwardWithJointFeedbackTrajectory.msg
 )
 generate_messages(DEPENDENCIES std_msgs)
 
