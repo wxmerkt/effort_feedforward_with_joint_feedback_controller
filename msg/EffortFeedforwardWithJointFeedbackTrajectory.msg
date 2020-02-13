@@ -1,2 +1,0 @@
-float64 dt
-effort_feedforward_with_joint_feedback_controller/EffortFeedforwardWithJointFeedback[] trajectory

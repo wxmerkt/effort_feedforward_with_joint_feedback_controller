@@ -5,8 +5,8 @@
 
 #include <angles/angles.h>
 #include <controller_interface/controller.h>
-#include <effort_feedforward_with_joint_feedback_controller/EffortFeedforwardWithJointFeedback.h>
 #include <hardware_interface/joint_command_interface.h>
+#include <ipab_controller_msgs/EffortFeedforwardWithJointFeedback.h>
 #include <pluginlib/class_list_macros.h>
 #include <realtime_tools/realtime_buffer.h>
 #include <realtime_tools/realtime_publisher.h>
@@ -128,7 +128,7 @@ public:
         velocity_gains_buffer_.writeFromNonRT(default_velocity_gains_);
 
         // Subscribe to command topic
-        sub_command_ = n.subscribe<effort_feedforward_with_joint_feedback_controller::EffortFeedforwardWithJointFeedback>("command", 1, &EffortFeedforwardWithJointFeedbackController::commandCB, this);
+        sub_command_ = n.subscribe<ipab_controller_msgs::EffortFeedforwardWithJointFeedback>("command", 1, &EffortFeedforwardWithJointFeedbackController::commandCB, this);
 
         // Start realtime state publisher
         feedback_control_ratio_pub_.reset(
@@ -240,7 +240,7 @@ protected:
 
     // Subscriber for new commands (real-time safe)
     ros::Subscriber sub_command_;
-    void commandCB(const effort_feedforward_with_joint_feedback_controller::EffortFeedforwardWithJointFeedbackConstPtr& msg)
+    void commandCB(const ipab_controller_msgs::EffortFeedforwardWithJointFeedbackConstPtr& msg)
     {
         // Positions
         if (msg->positions.size() == n_joints_)

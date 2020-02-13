@@ -16,13 +16,12 @@
   <depend>controller_interface</depend>
   <depend>hardware_interface</depend>
   <depend>joint_limits_interface</depend>
-  <depend>message_generation</depend>
-  <depend>message_runtime</depend>
   <depend>pluginlib</depend>
   <depend>realtime_tools</depend>
   <depend>roscpp</depend>
   <depend>std_msgs</depend>
-  <depend>urdf</depend> 
+  <depend>urdf</depend>
+  <depend>ipab_controller_msgs</depend>
 
   <export>
     <controller_interface plugin="${prefix}/EffortFeedforwardWithJointFeedbackController.xml"/>

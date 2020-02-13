@@ -5,23 +5,15 @@ set(CATKIN_DEPENDENCIES
   angles  
   controller_interface
   hardware_interface
-  message_generation
   pluginlib
   realtime_tools
   roscpp
   std_msgs
   urdf
+  ipab_controller_msgs
 )
 
 find_package(catkin REQUIRED COMPONENTS ${CATKIN_DEPENDENCIES})
-
-# Generate Messages
-add_message_files(
-  FILES
-  EffortFeedforwardWithJointFeedback.msg
-  EffortFeedforwardWithJointFeedbackTrajectory.msg
-)
-generate_messages(DEPENDENCIES std_msgs)
 
 # Export catkin package
 catkin_package(
@@ -34,7 +26,6 @@ catkin_package(
 ## Build ##
 ###########
 add_library(${PROJECT_NAME} src/EffortFeedforwardWithJointFeedbackController.cpp)
-add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS})
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
 target_include_directories(${PROJECT_NAME} PUBLIC ${catkin_INCLUDE_DIRS})
 target_compile_options(${PROJECT_NAME} PUBLIC -std=c++14 -Wall)
