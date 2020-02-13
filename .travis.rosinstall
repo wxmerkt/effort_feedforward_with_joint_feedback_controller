@@ -1,0 +1,4 @@
+- git:
+    uri: https://github.com/ipab-slmc/ipab_controller_msgs.git
+    version: master
+    local-name: ipab_controller_msgs
