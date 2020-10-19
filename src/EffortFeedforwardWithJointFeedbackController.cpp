@@ -43,8 +43,7 @@ public:
 
         // Get URDF
         urdf::Model urdf;
-        if (!urdf.initParam("anymal_description"))
-        //if (!urdf.initParam("robot_description"))
+        if (!urdf.initParamWithNodeHandle("robot_description", n))
         {
             ROS_ERROR("Failed to parse URDF file");
             return false;
