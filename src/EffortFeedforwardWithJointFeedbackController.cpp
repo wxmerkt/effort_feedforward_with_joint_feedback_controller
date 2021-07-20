@@ -146,7 +146,7 @@ public:
 
     void starting(const ros::Time& /*time*/)
     {
-        // TODO: START FROM CURRENT POSITION (!!!)
+        // Starting from the current position
         std::vector<double> q_current(n_joints_);
         for (std::size_t i = 0; i < n_joints_; ++i)
         {
@@ -336,6 +336,11 @@ protected:
             ROS_ERROR_STREAM("Number of velocity gains wrong: got " << msg->velocity_gains.size() << " expected " << n_joints_ << " or 0.");
         }
     }
+
+    // Add trajectory callback
+    // TODO: ...
+
+    //
 };
 }  // namespace effort_feedforward_with_joint_feedback_controller
 
