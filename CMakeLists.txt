@@ -26,7 +26,10 @@ catkin_package(
 ###########
 ## Build ##
 ###########
-add_library(${PROJECT_NAME} src/EffortFeedforwardWithJointFeedbackController.cpp)
+add_library(${PROJECT_NAME}
+  src/EffortFeedforwardWithJointFeedbackController.cpp
+  src/JPVTPIDFeedForwardController.cpp
+)
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
 target_include_directories(${PROJECT_NAME} PUBLIC ${catkin_INCLUDE_DIRS})
 target_compile_options(${PROJECT_NAME} PUBLIC -Wall -Wpedantic -Wextra)

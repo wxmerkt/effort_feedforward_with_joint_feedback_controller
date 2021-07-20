@@ -4,4 +4,9 @@
       ROS-Control controller for feed-forward effort control with joint PD feedback
     </description>
   </class>
+  <class name="effort_feedforward_with_joint_feedback_controller/JPVTPIDFeedForwardController" type="effort_feedforward_with_joint_feedback_controller::JPVTPIDFeedForwardController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      ROS-Control controller for feed-forward effort control with joint PD feedback
+    </description>
+  </class>
 </library>
