@@ -1,5 +1,6 @@
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.0.2)
 project(effort_feedforward_with_joint_feedback_controller)
+set(CMAKE_CXX_STANDARD 14)
 
 set(CATKIN_DEPENDENCIES
   angles  
@@ -28,7 +29,7 @@ catkin_package(
 add_library(${PROJECT_NAME} src/EffortFeedforwardWithJointFeedbackController.cpp)
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
 target_include_directories(${PROJECT_NAME} PUBLIC ${catkin_INCLUDE_DIRS})
-target_compile_options(${PROJECT_NAME} PUBLIC -std=c++14 -Wall)
+target_compile_options(${PROJECT_NAME} PUBLIC -Wall -Wpedantic -Wextra)
 
 #############
 ## Install ##

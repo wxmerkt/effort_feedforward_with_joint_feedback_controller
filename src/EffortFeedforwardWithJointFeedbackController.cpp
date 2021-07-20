@@ -144,7 +144,7 @@ public:
         return true;
     }
 
-    void starting(const ros::Time& time)
+    void starting(const ros::Time& /*time*/)
     {
         // TODO: START FROM CURRENT POSITION (!!!)
         std::vector<double> q_current(n_joints_);
